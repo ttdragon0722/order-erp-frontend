@@ -1,43 +1,72 @@
 "use client";
 
+import FillImage, { EObjectFit } from "@/components/ui/FillImage";
 import { useState } from "react";
 
 const LoginPage = () => {
-    const [username, setUsername] = useState("");
+    const [userID, setUserID] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Login with:", { username, password });
-        // 這裡可以呼叫 API 來驗證登入
+
+        const formData = new FormData();
+        formData.append("UserId", userID);
+        formData.append("Password", password);
+
+        const response = await fetch("/api/login", {
+            method: "POST",
+            body: formData,credentials: "include",
+        });
+
+        const data = await response.json();
+        console.log(data); // 可以用來 debug 登入回應
+        
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center">
-            <div className="w-full max-w-md bg-white/75 p-6 rounded-lg shadow-lg">
-                <h2 className="text-gray-900 text-2xl font-bold mb-4 text-center">登入</h2>
-                <form onSubmit={handleLogin} className="space-y-4">
-                    <div>
-                        <label className="text-gray-700 block mb-1">帳號</label>
+        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex max-md:flex-col w-7/8 h-7/8 rounded-2xl bg-gray-100 shadow-lg overflow-hidden">
+            <FillImage
+                objectFit={EObjectFit.Cover}
+                imageClass="w-full h-full object-center"
+                className="w-1/2 h-full max-md:w-full max-md:h-[40%]"
+                src="/order-erp.webp"
+                alt="site-img"
+            />
+            <div className="w-1/2 max-md:w-full bg-white px-16 h-full flex items-center justify-center">
+                <form onSubmit={handleSubmit} className="w-full max-w-sm flex flex-col">
+                    <h2 className="text-2xl font-semibold text-center mb-4 text-gray-700">系統登入</h2>
+
+                    {/* 帳號輸入框 */}
+                    <div className="mb-4">
+                        <label className="block text-gray-600 text-sm font-medium mb-2">帳號</label>
                         <input
+                            required
                             type="text"
-                            className="w-full px-3 py-2 bg-gray-100 text-gray-900 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="請輸入您的 id"
+                            value={userID} // 綁定 useState
+                            onChange={(e) => setUserID(e.target.value)} // 更新狀態
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                         />
                     </div>
-                    <div>
-                        <label className="text-gray-700 block mb-1">密碼</label>
+
+                    {/* 密碼輸入框 */}
+                    <div className="mb-6">
+                        <label className="block text-gray-600 text-sm font-medium mb-2">密碼</label>
                         <input
+                            required
                             type="password"
-                            className="w-full px-3 py-2 bg-gray-100 text-gray-900 border border-gray-300 rounded focus:ring-2 focus:ring-blue-400"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="請輸入您的密碼"
+                            value={password} // 綁定 useState
+                            onChange={(e) => setPassword(e.target.value)} // 更新狀態
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                         />
                     </div>
+
+                    {/* 登入按鈕 */}
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded"
+                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-lg transition-all duration-200"
                     >
                         登入
                     </button>

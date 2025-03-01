@@ -4,8 +4,12 @@ const nextConfig = {
 		return [
 			{
 				source: "/api/:path*", // 轉發所有 API 請求
-				destination: "http://localhost:5000/api/:path*", // 指向 ASP.NET API
+				destination: "http://localhost:5256/api/:path*", // 指向 ASP.NET API
 			},
+			{
+				source: "/swagger/:path*",
+				destination: "http://localhost:5256/swagger/:path*"
+			}
 		];
 	},
 };
