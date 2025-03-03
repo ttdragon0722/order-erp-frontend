@@ -1,4 +1,5 @@
-import "../style.css";
+import { ToolbarProvider } from "./_context/ToolbarContext";
+import "./style.css";
 
 export const metadata = {
   title: "Next.js",
@@ -14,9 +15,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex h-svh">
-        {toolbar}
-        {children}
+      <body>
+        <div className="flex w-full h-screen relative">
+          <ToolbarProvider>
+            {toolbar}
+            {children}
+          </ToolbarProvider>
+        </div>
       </body>
     </html>
   );
