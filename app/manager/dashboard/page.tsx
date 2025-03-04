@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import { useToolbar } from "./_context/ToolbarContext";
 import ToolbarButton from "./_components/toolbarButton";
-import { Header1, Header2 } from "@/components/ui/text";
+import { Header1, Header2 } from "@/components/ui/Text";
 
 export default function Dashboard() {
   const { isOpen } = useToolbar();

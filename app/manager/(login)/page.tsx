@@ -1,9 +1,11 @@
 "use client";
 
 import FillImage, { EObjectFit } from "@/components/ui/FillImage";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const LoginPage = () => {
+    const router = useRouter();
     const [userID, setUserID] = useState("");
     const [password, setPassword] = useState("");
 
@@ -21,7 +23,7 @@ const LoginPage = () => {
 
         const data = await response.json();
         console.log(data); // 可以用來 debug 登入回應
-        
+        router.push("manager/dashboard");
     };
 
     return (
