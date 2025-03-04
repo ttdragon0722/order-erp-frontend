@@ -37,21 +37,36 @@ export default function Toolbar() {
                 <div
                     onMouseEnter={() => setPanel(true)}
                     onMouseLeave={() => setPanel(false)}
-                    className="w-32 h-full absolute top-0 left-0 pt-[8vh] z-10 ">
+                    className="w-48 h-full fixed top-0 left-0 z-30 pointer-events-auto bg-transparent">
+                    {!isOpen && (
+                        <motion.div
+                            className="absolute z-50 top-0 left-0"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                        >
+                            <ToolbarButton hoverColor="amber-200" icon="open" action="open" />
+                        </motion.div>
+                    )}
                     <AnimatePresence>
                         {panel && (
                             <motion.div
-                                className="h-[90%] w-64 bg-[#121331] text-white rounded-r-3xl overflow-hidden shadow-lg"
+                                className="absolute top-0 left-0 w-64 h-full pt-[8vh]"
                                 initial={{ x: -256, opacity: 0 }} // 從左邊進場
                                 animate={{ x: 0, opacity: 1 }} // 滑入
                                 exit={{ x: -256, opacity: 0 }} // 滑出到左邊
                                 transition={{ type: "tween", duration: 0.3 }}
                             >
-                                <Links />
+                                <div
+                                    className="h-[90%] w-64 bg-[#121331]/95 backdrop-blur-md text-white rounded-r-3xl overflow-hidden shadow-lg"
+                                >
+                                    <Links />
+                                </div>
                             </motion.div>
                         )}
                     </AnimatePresence>
-                </div>
+                </div >
             }
         </>
     );
