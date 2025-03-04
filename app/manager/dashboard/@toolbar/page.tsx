@@ -25,7 +25,7 @@ export default function Toolbar() {
                 <div className="flex justify-end items-center h-[5vh]">
                     <ToolbarButton action="toggle" icon="close" />
                 </div>
-                <div className="w-full px-3">
+                <div className="w-64">
                     {/* <div className="my-3">
                         <FillImage className="w-full aspect-[5/4] rounded-lg" src="/order-erp.jpg" alt="logo" />
                     </div> */}
@@ -59,7 +59,7 @@ export default function Toolbar() {
                                 transition={{ type: "tween", duration: 0.3 }}
                             >
                                 <div
-                                    className="h-[90%] w-64 bg-[#121331]/95 backdrop-blur-md text-white rounded-r-3xl overflow-hidden shadow-lg"
+                                    className="h-[90%] w-64 bg-[#121331]/95 backdrop-blur-md text-white rounded-r-3xl overflow-hidden shadow-lg py-5"
                                 >
                                     <Links />
                                 </div>
