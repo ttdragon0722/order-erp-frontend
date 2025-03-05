@@ -35,6 +35,21 @@ export const Header2: React.FC<TextProps> = ({ children, className = "", color =
     );
 };
 
+export const Header3: React.FC<TextProps> = ({ children, className = "", color = "text-gray-800" }) => {
+    return (
+        <h3
+            className={clsx(
+                "text-xl md:text-2xl lg:text-3xl font-semibold",
+                color,
+                className
+            )}
+        >
+            {children}
+        </h3>
+    );
+};
+
+
 export const Paragraph: React.FC<TextProps> = ({ children, className = "", color = "text-gray-700" }) => {
     return (
         <p
