@@ -6,13 +6,16 @@ import { useToolbar } from "../_context/ToolbarContext";
 import ToolbarButton from "../_components/toolbarButton";
 import Links from "../_components/links";
 import { useState } from "react";
+import useKey from "@/hook/useKey";
 
 const widthAmount = 256;
 
 export default function Toolbar() {
-    const { isOpen } = useToolbar();
+    const { isOpen,toggleToolbar } = useToolbar();
 
     const [panel, setPanel] = useState(false);
+
+    useKey(toggleToolbar);
 
     return (
         <>
@@ -26,9 +29,6 @@ export default function Toolbar() {
                     <ToolbarButton action="toggle" icon="close" />
                 </div>
                 <div className="w-64">
-                    {/* <div className="my-3">
-                        <FillImage className="w-full aspect-[5/4] rounded-lg" src="/order-erp.jpg" alt="logo" />
-                    </div> */}
                     <Links />
                 </div>
             </motion.div>
@@ -37,7 +37,7 @@ export default function Toolbar() {
                 <div
                     onMouseEnter={() => setPanel(true)}
                     onMouseLeave={() => setPanel(false)}
-                    className="w-48 h-full fixed top-0 left-0 z-30 pointer-events-auto bg-transparent">
+                    className="w-48 h-full fixed top-0 left-0 z-50 pointer-events-auto bg-transparent">
                     {!isOpen && (
                         <motion.div
                             className="absolute z-50 top-0 left-0"

@@ -6,6 +6,7 @@ import useStatus from "@/hook/useLoading";
 import { BusinessSetting, BusinessSettings } from "@/lib/businessSettings";
 import { useEffect, useState } from "react";
 import SwitchLabel from "./_components/SwitchLabel";
+import Group from "@/components/ui/Group";
 
 export default function Dashboard() {
 
@@ -26,32 +27,24 @@ export default function Dashboard() {
     };
 
     fetchSettings(); // 調用 async 函式
-  }, []); // 只在組件首次渲染時執行
+  }, []);
 
   return (
-    <>
-      <Header1>Welcome to ERP Dashboard!</Header1>
+    <Group>
+      <Header1>後台管理系統 Dashboard</Header1>
       <hr className="my-2" />
-      <Header2>hello world!</Header2>
-
-      {
-        status === "loading" ? <div>loading</div> :
-          status === "error" ? <div>error</div> :
-            status === "success" && settings && <div className="flex w-full justify-around">
-              <SwitchLabel label="營業狀態" src={settings.enableOrdering} api="setEnableOrderingStatus" />
-              <SwitchLabel label="外帶狀態" src={settings.enableTakeout} api="setTakeoutStatus" />
-              <SwitchLabel label="內用狀態" src={settings.enableDineIn} api="setDineInStatus" />
-              <SwitchLabel label="外送狀態" src={settings.enableDelivery} api="setDeliveryStatus" />
-            </div>
-      }
-
-      <ManagerLogoutBtn />
-      <SearchInput queryFunc={(q) => { console.log("query", q); }} />
-      {
-        Array.from({ length: 100 }).map((_, index) => {
-          return <div key={index}>haha</div>;
-        })
-      }
-    </>
+      <Group title="快捷選單">
+        {
+          status === "loading" ? <div className="animate-pulse h-36 bg-gray-200 rounded-xl w-full mb-4 flex justify-center items-center">loading...</div> :
+            status === "error" ? <div>error</div> :
+              status === "success" && settings && <div className="flex w-full justify-around gap-3">
+                <SwitchLabel label="營業狀態" src={settings.enableOrdering} api="setEnableOrderingStatus" />
+                <SwitchLabel label="外帶狀態" src={settings.enableTakeout} api="setTakeoutStatus" />
+                <SwitchLabel label="內用狀態" src={settings.enableDineIn} api="setDineInStatus" />
+                <SwitchLabel label="外送狀態" src={settings.enableDelivery} api="setDeliveryStatus" />
+              </div>
+        }
+      </Group>
+    </Group>
   );
 }

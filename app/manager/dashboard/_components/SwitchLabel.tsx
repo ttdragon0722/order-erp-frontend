@@ -41,9 +41,14 @@ const SwitchLabel: FC<SwitchLabelProp> = ({
     };
 
     return (
-        <div className={clsx("flex flex-col h-36 items-center justify-center", className)}>
+        <div className={
+            clsx("text-xl flex flex-col h-36 items-center justify-center w-4/5 rounded-xl overflow-hidden shadow-xl transition-all ease-in-out",
+                className,
+                data ? "font-bold bg-[#d9dfff]" : "bg-[#eaeefd]"
+            )
+        }>
             {label}
-            <label className="inline-flex items-center cursor-pointer">
+            <label className="sha mt-3 inline-flex items-center cursor-pointer drop-shadow-lg">
                 <input
                     type="checkbox"
                     checked={data}
@@ -51,7 +56,7 @@ const SwitchLabel: FC<SwitchLabelProp> = ({
                     className="sr-only peer"
                     disabled={loading} // 當請求中時，避免多次點擊
                 />
-                <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
+                <div className="relative w-11 h-6 bg-gray-500 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
             </label>
         </div>
     );
