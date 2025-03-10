@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ApiResponse } from "./types/apiResponse";
+import { handleApiResponse } from "@/utils/apiHelper";
 
 export interface BusinessSetting {
 	id: string;
@@ -16,12 +17,11 @@ export const BusinessSettings = {
 		try {
 			const res = await axios.get("/api/settings/getStatus");
 
-			if (res.status !== 200) {
-				throw new Error("設定資料讀取失敗" + res.data.message);
-			}
+			return handleApiResponse(
+				res,
+				"設定資料讀取失敗"
+			) as ApiResponse<BusinessSetting>;
 
-			// 假設返回的資料結構符合 BusinessSetting
-			return res.data as ApiResponse<BusinessSetting>;
 		} catch (error) {
 			console.error("登出錯誤:", error);
 			return { success: false, message: "setting讀取失敗" };
@@ -35,13 +35,11 @@ export const BusinessSettings = {
 				},
 			});
 
-			console.log(res);
+			return handleApiResponse(
+				res,
+				"設定資料失敗"
+			)
 
-			if (res.status !== 200) {
-				throw new Error("設定資料失敗: " + res.data.message);
-			}
-
-			return res.data; // 回傳 API 回應的資料
 		} catch (error) {
 			console.error("API 請求錯誤:", error);
 			throw new Error("API 請求失敗");

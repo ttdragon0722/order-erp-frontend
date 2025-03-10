@@ -1,33 +1,13 @@
 "use client"
-import ManagerLogoutBtn from "@/components/logout";
-import SearchInput from "@/components/Searchbar";
-import { Header1, Header2 } from "@/components/ui/Text";
-import useStatus from "@/hook/useLoading";
-import { BusinessSetting, BusinessSettings } from "@/lib/businessSettings";
-import { useEffect, useState } from "react";
+import { Header1 } from "@/components/ui/Text";
+import { BusinessSettings } from "@/lib/businessSettings";
 import SwitchLabel from "./_components/SwitchLabel";
 import Group from "@/components/ui/Group";
+import { useFetch } from "@/hook/useFetch";
 
 export default function Dashboard() {
 
-  const { status, setStatus } = useStatus();
-  const [settings, setSettings] = useState<BusinessSetting>();
-
-  useEffect(() => {
-    // 定義一個 async 函式來獲取設定資料
-    const fetchSettings = async () => {
-      const setting = await BusinessSettings.getAll();
-
-      if (setting.success) {
-        setStatus.success();
-        setSettings(setting.data);
-      } else {
-        setStatus.error();
-      }
-    };
-
-    fetchSettings(); // 調用 async 函式
-  }, []);
+  const { status, data: settings } = useFetch(BusinessSettings.getAll);
 
   return (
     <Group>

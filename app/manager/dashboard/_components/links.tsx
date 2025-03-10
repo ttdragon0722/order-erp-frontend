@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 import { v4 } from "uuid";
 
 const rootRoute = "/manager/dashboard"
@@ -41,15 +40,11 @@ const routes: IRoute[] = [
 const Links = () => {
     const pathname = usePathname();
 
-    useEffect(() => {
-        console.log(pathname);
-    }, [pathname])
-
     return <div className="h-full">
         {
             routes.map((route, idx) => {
                 return <Link key={v4()} href={route.route} title={route.name} >
-                    <div className={clsx("px-3 py-1.5 hover:bg-white/30 relative",pathname === route.route && "bg-white/10")}>
+                    <div className={clsx("px-3 py-1.5 hover:bg-white/30 relative", pathname === route.route && "bg-white/10")}>
                         {
                             pathname === route.route
                         }

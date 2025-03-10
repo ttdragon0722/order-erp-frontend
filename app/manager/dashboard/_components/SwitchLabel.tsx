@@ -1,4 +1,4 @@
-import useStatus from "@/hook/useLoading";
+import useStatus from "@/hook/useStatus";
 import { BusinessSettings } from "@/lib/businessSettings";
 import clsx from "clsx";
 import { FC, useState } from "react";
