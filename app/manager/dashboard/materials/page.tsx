@@ -1,9 +1,10 @@
-import { Header2, Header3, Paragraph } from "@/components/ui/Text";
-import { getMaterials } from "@/lib/materials";
-import { Suspense } from "react";
-import MaterialTable from "./_components/material-table";
+"use client"
+import { Header2, Header3 } from "@/components/ui/Text";
+import MaterialManage from "./_components/material-manage";
 
-const Materials = async () => {
+
+const Materials = () => {
+
     return <>
         <Header2>
             原料管理 | Materials Manage
@@ -12,14 +13,7 @@ const Materials = async () => {
             <Header3>
                 原料列表
             </Header3>
-            <Suspense fallback={<p>正在加載材料...</p>}>
-                <MaterialTable />
-            </Suspense>
-            {
-                Array.from({ length: 100 }).map((_, index) => {
-                    return <div key={index}>haha</div>;
-                })
-            }
+            <MaterialManage />
         </div>
     </>
 }

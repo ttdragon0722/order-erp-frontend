@@ -1,6 +1,7 @@
 import { ToolbarProvider } from "./_context/ToolbarContext";
 import "./style.css";
 import Container from "./_components/container";
+import QueryProvider from "@/context/QueryProvider";
 
 export const metadata = {
   title: "Dashboard",
@@ -14,17 +15,20 @@ export default function RootLayout({
   children: React.ReactNode,
   toolbar: React.ReactNode
 }) {
+
   return (
     <html lang="en">
       <body>
-        <div className="flex w-full h-screen relative">
-          <ToolbarProvider>
-            {toolbar}
-            <Container>
-              {children}
-            </Container>
-          </ToolbarProvider>
-        </div>
+        <QueryProvider>
+          <div className="flex w-full h-screen relative">
+            <ToolbarProvider>
+              {toolbar}
+              <Container>
+                {children}
+              </Container>
+            </ToolbarProvider>
+          </div>
+        </QueryProvider>
       </body>
     </html>
   );

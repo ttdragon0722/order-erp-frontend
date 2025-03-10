@@ -1,6 +1,7 @@
 "use client";
 
 import FillImage, { EObjectFit } from "@/components/ui/FillImage";
+import { ManagerAuth } from "@/lib/managerAuth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -11,19 +12,16 @@ const LoginPage = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const data = await ManagerAuth.login(userID, password);
 
-        const formData = new FormData();
-        formData.append("UserId", userID);
-        formData.append("Password", password);
+        console.log(data); // Debug 回應
 
-        const response = await fetch("/api/login", {
-            method: "POST",
-            body: formData,credentials: "include",
-        });
+        if (data.success) {
+            router.push("/manager/dashboard");
+        } else {
+            alert("登入失敗：" + data.message);
+        }
 
-        const data = await response.json();
-        console.log(data); // 可以用來 debug 登入回應
-        router.push("manager/dashboard");
     };
 
     return (
