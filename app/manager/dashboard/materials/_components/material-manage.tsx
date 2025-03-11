@@ -1,8 +1,8 @@
-import { useFetch } from "@/hook/useFetch";
+import { useApi } from "@/hook/useApi";
 import { Materials } from "@/lib/materials";
 
 const MaterialManage = () => {
-    const { status, data } = useFetch(Materials.get);
+    const { status, data } = useApi(Materials.get);
 
     return <>
         

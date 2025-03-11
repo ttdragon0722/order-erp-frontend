@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ApiResponse } from "./types/apiResponse";
-import { handleApiResponse } from "@/utils/apiHelper";
+import { handleApiResponse200 } from "@/utils/apiHelper";
 import { Material } from "./types/material.type";
 
 export const Materials = {
@@ -10,7 +10,7 @@ export const Materials = {
 		try {
 			const res = await axios.get("/api/getMaterials");
 
-            return handleApiResponse(
+            return handleApiResponse200(
                 res,
                 "materials讀取失敗"
             )

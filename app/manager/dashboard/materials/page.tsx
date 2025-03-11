@@ -5,6 +5,8 @@ import MaterialManage from "./_components/material-manage";
 
 const Materials = () => {
 
+    
+
     return <>
         <Header2>
             原料管理 | Materials Manage

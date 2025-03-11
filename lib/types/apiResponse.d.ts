@@ -1,8 +1,12 @@
-// dtos/apiResponse.ts
+export type Responses<T> = ApiResponse<T> | ApiResponseNoData;
+export type ApiFunc<T> = () => Promise<Responses<T>>;
 
-export interface ApiResponse<T> {
+export interface ApiResponseNoData {
 	success: boolean;
-	message: string;
-	error?: string;
+	message?: string;
+}
+
+export interface ApiResponse<T> extends ApiResponseNoData {
 	data?: T;
 }
+

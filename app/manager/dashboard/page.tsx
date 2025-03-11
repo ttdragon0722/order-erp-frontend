@@ -3,11 +3,11 @@ import { Header1 } from "@/components/ui/Text";
 import { BusinessSettings } from "@/lib/businessSettings";
 import SwitchLabel from "./_components/SwitchLabel";
 import Group from "@/components/ui/Group";
-import { useFetch } from "@/hook/useFetch";
+import { useApi } from "@/hook/useApi";
 
 export default function Dashboard() {
 
-  const { status, data: settings } = useFetch(BusinessSettings.getAll);
+  const { status, data: settings } = useApi(BusinessSettings.getAll);
 
   return (
     <Group>
