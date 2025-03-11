@@ -1,6 +1,7 @@
 "use client";
 
 import FillImage, { EObjectFit } from "@/components/ui/FillImage";
+import { usePostApi } from "@/hook/useApi";
 import { ManagerAuth } from "@/lib/managerAuth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -10,17 +11,19 @@ const LoginPage = () => {
     const [userID, setUserID] = useState("");
     const [password, setPassword] = useState("");
 
+    const { postData: loginFunc } = usePostApi(ManagerAuth.login);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const data = await ManagerAuth.login(userID, password);
 
-        console.log(data); // Debug 回應
-
-        if (data.success) {
-            router.push("/manager/dashboard");
-        } else {
-            alert("登入失敗：" + data.message);
-        }
+        loginFunc([userID, password],
+            () => {
+                router.push("/manager/dashboard");
+            },
+            (err) => {
+                alert("登入失敗：" + err);
+            }
+        )
 
     };
 

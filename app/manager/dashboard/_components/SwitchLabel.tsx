@@ -1,3 +1,4 @@
+import { usePostApi } from "@/hook/useApi";
 import useStatus from "@/hook/useStatus";
 import { BusinessSettings } from "@/lib/businessSettings";
 import clsx from "clsx";
@@ -16,6 +17,8 @@ const SwitchLabel: FC<SwitchLabelProp> = ({
     const [data, setData] = useState(src);
     const [loading, setLoading] = useState(false); // 防止重複點擊
 
+    const { postData: setSetting } = usePostApi(BusinessSettings.set);
+
     const handleToggle = async () => {
         if (loading) return; // 避免多次點擊
         setLoading(true);
@@ -23,21 +26,19 @@ const SwitchLabel: FC<SwitchLabelProp> = ({
         const newData = !data; // 先計算新的狀態
         setData(newData); // 切換開關狀態
 
-        try {
-            const res = await BusinessSettings.set(api, newData); // 發送 API 請求
-
-            if (res.success) {
+        setSetting([api, newData],
+            () => {
                 console.log("設定成功");
-            } else {
-                console.error("設定失敗", res.message);
-                setData(data); // 恢復原來的狀態
+            },
+            (err) => {
+                console.error(err);
+                setData(data); // API 請求失敗時恢復原狀態
+            },
+            () => {
+                setLoading(false); // 無論成功或失敗，都解鎖按鈕
+
             }
-        } catch (error) {
-            console.error("API 請求錯誤:", error);
-            setData(data); // API 請求失敗時恢復原狀態
-        } finally {
-            setLoading(false); // 無論成功或失敗，都解鎖按鈕
-        }
+        )
     };
 
     return (
