@@ -1,6 +1,8 @@
 "use client";
 
+import { SubmitButton } from "@/components/ui/Button";
 import FillImage, { EObjectFit } from "@/components/ui/FillImage";
+import { Input } from "@/components/ui/Input";
 import { usePostApi } from "@/hook/useApi";
 import { ManagerAuth } from "@/lib/managerAuth";
 import { useRouter } from "next/navigation";
@@ -43,36 +45,29 @@ const LoginPage = () => {
                     {/* 帳號輸入框 */}
                     <div className="mb-4">
                         <label className="block text-gray-600 text-sm font-medium mb-2">帳號</label>
-                        <input
+                        <Input
                             required
                             type="text"
                             placeholder="請輸入您的 id"
-                            value={userID} // 綁定 useState
-                            onChange={(e) => setUserID(e.target.value)} // 更新狀態
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                            value={userID}
+                            onChange={(e) => setUserID(e.target.value)}
                         />
                     </div>
 
                     {/* 密碼輸入框 */}
                     <div className="mb-6">
                         <label className="block text-gray-600 text-sm font-medium mb-2">密碼</label>
-                        <input
+                        <Input
                             required
                             type="password"
                             placeholder="請輸入您的密碼"
-                            value={password} // 綁定 useState
-                            onChange={(e) => setPassword(e.target.value)} // 更新狀態
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
 
                     {/* 登入按鈕 */}
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-lg transition-all duration-200"
-                    >
-                        登入
-                    </button>
+                    <SubmitButton label="登入" />
                 </form>
             </div>
         </div>

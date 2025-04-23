@@ -1,8 +1,10 @@
 class CommitHandler<T extends { id: string }> {
-	private originalSource: T[];
-	private change: Record<string, Partial<T>>;
+	private originalSource!: T[];
+	private change!: Record<string, Partial<T>>;
 
-	constructor(source: T[]) {
+	constructor() { }
+
+	register(source: T[]) {
 		this.originalSource = [...source]; // 複製原始資料
 		this.change = {};
 	}
@@ -68,30 +70,30 @@ class CommitHandler<T extends { id: string }> {
 
 export default CommitHandler;
 
-// 測試
-const data = [
-	{
-		id: "01a5c192-e355-47ea-a9c4-0b52c7fcdb5b",
-		name: "花生",
-		enable: true,
-		stock: true,
-		stockAmount: null,
-		productMaterials: null,
-	},
-	{
-		id: "02b6d293-f466-58fb-bad5-1c63d8gfeh6c",
-		name: "杏仁",
-		enable: false,
-		stock: false,
-		stockAmount: 20,
-		productMaterials: ["sugar", "oil"],
-	},
-];
+// // 測試
+// const data = [
+// 	{
+// 		id: "01a5c192-e355-47ea-a9c4-0b52c7fcdb5b",
+// 		name: "花生",
+// 		enable: true,
+// 		stock: true,
+// 		stockAmount: null,
+// 		productMaterials: null,
+// 	},
+// 	{
+// 		id: "02b6d293-f466-58fb-bad5-1c63d8gfeh6c",
+// 		name: "杏仁",
+// 		enable: false,
+// 		stock: false,
+// 		stockAmount: 20,
+// 		productMaterials: ["sugar", "oil"],
+// 	},
+// ];
 
-const handler = new CommitHandler(data);
-handler.update("01a5c192-e355-47ea-a9c4-0b52c7fcdb5b", "name", "花生仁");
-handler.update("02b6d293-f466-58fb-bad5-1c63d8gfeh6c", "enable", true);
+// const handler = new CommitHandler(data);
+// handler.update("01a5c192-e355-47ea-a9c4-0b52c7fcdb5b", "name", "花生仁");
+// handler.update("02b6d293-f466-58fb-bad5-1c63d8gfeh6c", "enable", true);
 
-console.log("變更紀錄:", handler.getChanges());
-handler.commit();
-console.log("更新後的資料:", handler.getData());
+// console.log("變更紀錄:", handler.getChanges());
+// handler.commit();
+// console.log("更新後的資料:", handler.getData());

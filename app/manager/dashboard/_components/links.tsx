@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { HTMLAttributeAnchorTarget } from "react";
 import { v4 } from "uuid";
 
 const rootRoute = "/manager/dashboard"
@@ -8,6 +9,7 @@ const rootRoute = "/manager/dashboard"
 interface IRoute {
     name: string;
     route: string;
+    target?: HTMLAttributeAnchorTarget | undefined;
 }
 
 const routes: IRoute[] = [
@@ -33,7 +35,8 @@ const routes: IRoute[] = [
     },
     {
         name: "Api 技術支援",
-        route: "localhost:5256/swagger"
+        route: "/swagger/index.html",
+        target:"_blank"
     }
 ]
 
@@ -43,7 +46,7 @@ const Links = () => {
     return <div className="h-full">
         {
             routes.map((route, idx) => {
-                return <Link key={v4()} href={route.route} title={route.name} >
+                return <Link key={v4()} href={route.route} title={route.name}  target={route.target} >
                     <div className={clsx("px-3 py-1.5 hover:bg-white/30 relative", pathname === route.route && "bg-white/10")}>
                         {
                             pathname === route.route

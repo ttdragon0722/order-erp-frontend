@@ -37,7 +37,7 @@ const MaterialTable = () => {
     if (loading) return <p>載入中...</p>;
     if (error) return <p>錯誤：{error}</p>;
 
-    const commitHandler = new CommitHandler(materials);
+    const commitHandler = new CommitHandler();
 
     return (
         <>
