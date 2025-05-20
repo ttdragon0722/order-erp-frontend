@@ -10,10 +10,12 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-  toolbar
+  toolbar,
+  list
 }: {
   children: React.ReactNode,
-  toolbar: React.ReactNode
+  toolbar: React.ReactNode,
+  list: React.ReactNode
 }) {
 
   return (
@@ -25,6 +27,7 @@ export default function RootLayout({
               {toolbar}
               <Container>
                 {children}
+              {list}
               </Container>
             </ToolbarProvider>
           </div>

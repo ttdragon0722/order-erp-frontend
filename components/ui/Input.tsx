@@ -18,17 +18,27 @@ export const Checkbox: FC<CheckboxProps> = ({ id, checked, onChange }) => {
     );
 };
 
-
 interface InputProp {
-    type?: HTMLInputTypeAttribute | undefined;
+    value: string | number;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void; // 新增 onBlur
+    type?: HTMLInputTypeAttribute;
     required?: boolean;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // 直接傳遞事件
     placeholder?: string;
     className?: string;
+    min?: number; // ✅ 額外加入支援 min
 }
 
-export const Input: React.FC<InputProp> = ({ type = "text", required, value, onChange, placeholder, className }) => {
+export const Input: React.FC<InputProp> = ({
+    type = "text",
+    required,
+    value,
+    onChange,
+    onBlur, // 接收 onBlur 屬性
+    placeholder,
+    className,
+    min,
+}) => {
     return (
         <input
             type={type}
@@ -36,7 +46,9 @@ export const Input: React.FC<InputProp> = ({ type = "text", required, value, onC
             placeholder={placeholder}
             value={value}
             onChange={onChange}
+            onBlur={onBlur} // 傳遞給 input 元素
             className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent ${className}`}
+            min={type === "number" ? min : undefined}
         />
     );
 };

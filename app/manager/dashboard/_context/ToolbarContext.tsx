@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 // 定義 Toolbar Context 類型
 interface ToolbarContextType {
@@ -15,8 +15,19 @@ const ToolbarContext = createContext<ToolbarContextType | undefined>(undefined);
 
 // Provider：包住它後，所有子元件都能存取 Toolbar 狀態
 export function ToolbarProvider({ children }: { children: React.ReactNode }) {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
+    useEffect(() => {
+        const savedState = localStorage.getItem("toolbar-is-open");
+        if (savedState !== null) {
+            setIsOpen(savedState === "true");
+        }
+    }, []);
+
+    // 當 isOpen 變化時，儲存到 localStorage
+    useEffect(() => {
+        localStorage.setItem("toolbar-is-open", String(isOpen));
+    }, [isOpen]);
 
     return (
         <ToolbarContext.Provider

@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import { FC, useState } from "react";
 
-const ColorSet = {
+export const ColorSet = {
     blue: "bg-blue-600 text-white",
     red: "bg-red-600 text-white",
     green: "bg-green-600 text-white",
@@ -42,16 +42,24 @@ const DelBtn: FC<DelBtnProps> = ({ onClick }) => {
 
 interface ChipProp {
     value: string;
-    color?: ColorName;
+    color?: ColorName | number; // ← 這裡讓 color 可以是 ColorName 也可以是數字
     onDel?: () => void;
 }
 
 export const Chip: FC<ChipProp> = ({ value, color = "blue", onDel }) => {
+    const colorKeys = Object.keys(ColorSet) as ColorName[]; // 取得所有顏色 key 的陣列
+    let realColor: ColorName = "blue"; // 預設是藍色
+
+    if (typeof color === "number") {
+        realColor = colorKeys[color % colorKeys.length]; // 數字的話，找對應的顏色，超出就取餘數
+    } else {
+        realColor = color;
+    }
 
     return (
         <div className={clsx(
-            "relative rounded-md py-0.5 px-2.5 border border-transparent text-sm transition-all shadow-sm flex items-center",
-            ColorSet[color],
+            "relative rounded-md py-0.5 px-2.5 border border-transparent text-sm transition-all shadow-sm flex items-center cursor-default",
+            ColorSet[realColor],
             onDel && "pr-8"
         )}>
             {value}
@@ -62,18 +70,20 @@ export const Chip: FC<ChipProp> = ({ value, color = "blue", onDel }) => {
     );
 };
 
-export const TagInput = () => {
-    const [tags, setTags] = useState<string[]>([]);
+type TagInputProps = {
+    tags: string[];
+    setTags: React.Dispatch<React.SetStateAction<string[]>>;
+};
+
+export const TagInput = ({ tags, setTags }: TagInputProps) => {
     const [inputValue, setInputValue] = useState("");
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if ((e.key === " " || e.key === "\u3000" || e.key === "Enter") && inputValue.trim() !== "") {
-            // 按 "半形空格"、"全形空格" 或 "Enter" 並且輸入內容不為空，則新增 Chip
             e.preventDefault();
             setTags([...tags, inputValue.trim()]);
-            setInputValue(""); // 清空輸入框
+            setInputValue("");
         } else if (e.key === "Backspace" && inputValue === "" && tags.length > 0) {
-            // 按 Backspace 且輸入框為空時，刪除最後一個 Tag
             setTags(tags.slice(0, -1));
         }
     };

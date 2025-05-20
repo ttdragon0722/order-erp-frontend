@@ -12,10 +12,11 @@ import { ApiCallable, ApiFunc, ApiFuncWithArgs, Responses } from "@/lib/types/ap
 interface UseApiResponse<T> {
     /** API 請求的狀態 (loading, success, error) */
     status: Status;
-    
+
     /** API 回應的資料 (可選) */
     data?: T;
-    
+    setData?: React.Dispatch<React.SetStateAction<T | undefined>>; 
+
     /** 完整的 API 回應物件 (包含 success, message 等資訊) */
     res?: Responses<T>;
 }
@@ -62,7 +63,7 @@ export function useApi<T>(fetchFunc: ApiFunc<T>): UseApiResponse<T> {
         fetchData(); // 組件掛載時自動執行 API 請求
     }, []);
 
-    return { status, data, res }; // 回傳 API 狀態、資料與完整回應
+    return { status, data, setData, res }; // 回傳 API 狀態、資料與完整回應
 }
 
 // 定義通用的 POST API Hook 回應型別
@@ -107,7 +108,7 @@ export function usePostApi<T>(postFunc: ApiCallable<T>): UsePostApiResponse<T> {
             setStatus.loading(); // 設定狀態為 loading
 
             // 根據函式類型決定如何執行
-            const result: Responses<T> = Array.isArray(params) && params 
+            const result: Responses<T> = Array.isArray(params) && params
                 ? await (postFunc as ApiFuncWithArgs<T>)(...params) // 帶參數的 API
                 : await (postFunc as ApiFunc<T>)(); // 不帶參數的 API
 

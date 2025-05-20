@@ -22,12 +22,16 @@ const routes: IRoute[] = [
         route: rootRoute + "/profile"
     },
     {
+        name: "商品類別管理",
+        route: rootRoute + "/classification"
+    },
+    {
         name: "原料管理",
         route: rootRoute + "/materials"
     },
     {
-        name: "商品類別管理",
-        route: rootRoute + "/product-types"
+        name: "選項管理",
+        route: rootRoute + "/options"
     },
     {
         name: "商品管理",
@@ -36,7 +40,7 @@ const routes: IRoute[] = [
     {
         name: "Api 技術支援",
         route: "/swagger/index.html",
-        target:"_blank"
+        target: "_blank"
     }
 ]
 
@@ -46,7 +50,7 @@ const Links = () => {
     return <div className="h-full">
         {
             routes.map((route, idx) => {
-                return <Link key={v4()} href={route.route} title={route.name}  target={route.target} >
+                return <Link key={v4()} href={route.route} title={route.name} target={route.target} >
                     <div className={clsx("px-3 py-1.5 hover:bg-white/30 relative", pathname === route.route && "bg-white/10")}>
                         {
                             pathname === route.route
