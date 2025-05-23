@@ -1,4 +1,4 @@
-import { OptionGroupType } from "@/config/optionType";
+import { OptionGroupType } from "@/lib/enums/optionType";
 import { Material } from "./material.type";
 import { ProductExcludedOption } from "./productExcludedOption.type";
 import { ProductOption } from "./productOption.type";

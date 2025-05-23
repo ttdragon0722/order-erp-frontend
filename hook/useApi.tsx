@@ -15,7 +15,7 @@ interface UseApiResponse<T> {
 
     /** API 回應的資料 (可選) */
     data?: T;
-    setData?: React.Dispatch<React.SetStateAction<T | undefined>>; 
+    setData?: React.Dispatch<React.SetStateAction<T | undefined>>;
 
     /** 完整的 API 回應物件 (包含 success, message 等資訊) */
     res?: Responses<T>;
@@ -140,4 +140,58 @@ export function usePostApi<T>(postFunc: ApiCallable<T>): UsePostApiResponse<T> {
     };
 
     return { status, data, res, postData }; // 回傳 API 狀態、資料與請求函式
+}
+
+interface UseApiParamResponse<T> {
+    status: Status;
+    data?: T;
+    setData?: React.Dispatch<React.SetStateAction<T | undefined>>;
+    res?: Responses<T>;
+}
+
+/**
+ * 可傳入參數的通用 API Hook
+ * 
+ * @template T - API 回傳資料型別
+ * @param {(...args: any[]) => Promise<Responses<T>>} fetchFunc - 可接受參數的 API 函式
+ * @param {any[]} params - 要傳給 fetchFunc 的參數陣列
+ * @param {boolean} [auto=true] - 是否自動在 useEffect 時執行
+ * @returns {UseApiParamResponse<T>} - 包含 API 狀態、資料與完整回應
+ */
+export function useApiParam<T>(
+    fetchFunc: (...args: any[]) => Promise<Responses<T>>,
+    params: any[] = [],
+    auto: boolean = true
+): UseApiParamResponse<T> {
+    const { status, setStatus } = useStatus();
+    const [data, setData] = useState<T | undefined>(undefined);
+    const [res, setRes] = useState<Responses<T> | undefined>(undefined);
+
+    useEffect(() => {
+        if (!auto) return;
+
+        const fetchData = async () => {
+            try {
+                const result: Responses<T> = await fetchFunc(...params);
+                setRes(result);
+
+                if (result.success) {
+                    if ("data" in result) {
+                        setData(result.data);
+                    }
+                    setStatus.success();
+                } else {
+                    console.error(result.message);
+                    setStatus.error();
+                }
+            } catch (error) {
+                console.error("API 請求錯誤:", error);
+                setStatus.error();
+            }
+        };
+
+        fetchData();
+    }, [JSON.stringify(params)]); // 當參數變動時重新請求
+
+    return { status, data, setData, res };
 }

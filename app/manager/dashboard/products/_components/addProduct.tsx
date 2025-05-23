@@ -1,4 +1,4 @@
-import { OptionGroupType } from "@/config/optionType";
+import { OptionGroupType } from "@/lib/enums/optionType";
 import { useState } from "react";
 
 const AddProduct = () => {

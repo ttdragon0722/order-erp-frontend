@@ -1,4 +1,4 @@
-import { OptionGroupType } from "@/config/optionType";
+import { OptionGroupType } from "@/lib/enums/optionType";
 import axios from "axios";
 import { ApiResponse } from "./types/apiResponse";
 import { OptionResponse } from "./types/option.type";

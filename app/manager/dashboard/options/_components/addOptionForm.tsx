@@ -4,7 +4,7 @@ import { SubmitButton } from "@/components/ui/Button";
 import { TagInput } from "@/components/ui/Chip";
 import { Checkbox, Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
-import { OptionGroupType, OptionGroupTypeOptions } from "@/config/optionType";
+import { OptionGroupType, OptionGroupTypeOptions } from "@/lib/enums/optionType";
 import { useApi, usePostApi } from "@/hook/useApi";
 import { Materials } from "@/lib/materials";
 import { Options } from "@/lib/options";

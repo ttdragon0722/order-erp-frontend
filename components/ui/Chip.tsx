@@ -1,6 +1,6 @@
 "use client"
 import clsx from "clsx";
-import { FC, useState } from "react";
+import { FC, ReactNode, useState } from "react";
 
 export const ColorSet = {
     blue: "bg-blue-600 text-white",
@@ -66,6 +66,33 @@ export const Chip: FC<ChipProp> = ({ value, color = "blue", onDel }) => {
             {onDel &&
                 <DelBtn onClick={onDel} />
             }
+        </div>
+    );
+};
+
+interface EventProp {
+    value: string;
+    color?: ColorName | number;
+    icon?: ReactNode;
+}
+
+export const Event: FC<EventProp> = ({ value, color = "blue", icon }) => {
+    const colorKeys = Object.keys(ColorSet) as ColorName[];
+    let realColor: ColorName = "blue";
+
+    if (typeof color === "number") {
+        realColor = colorKeys[color % colorKeys.length];
+    } else {
+        realColor = color;
+    }
+
+    return (
+        <div className={clsx(
+            "relative rounded-md py-3 font-bold px-4 border border-transparent text-sm transition-all shadow-sm flex items-center gap-2 cursor-default",
+            ColorSet[realColor]
+        )}>
+            {icon && <span className="flex-shrink-0">{icon}</span>}
+            <span>{value}</span>
         </div>
     );
 };

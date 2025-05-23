@@ -6,13 +6,16 @@ import { v4 } from "uuid";
 import { Header3 } from "@/components/ui/Text";
 import ContainerMobile from "../_components/container";
 import Link from "next/link";
+import FunctionBar from "../_components/functbar";
+import ManagerLogoutBtn from "@/components/logout";
 
 const Main = () => {
     const { data } = useApi(Product.getList);
 
-    return <div className="relative h-fit">
+    return <div className="relative h-fit pb-10">
         <OrderHeader />
         <ContainerMobile>
+            <FunctionBar />
             {
                 data &&
                 data.map((t) => {

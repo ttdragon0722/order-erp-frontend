@@ -1,5 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	images: {
+		domains: ["profile.line-scdn.net"],
+	},
+	async headers() {
+		return [
+			{
+				source: "/favicon.ico",
+				headers: [
+					{
+						key: "Cache-Control",
+						value: "public, max-age=86400, immutable",
+					},
+				],
+			},
+		];
+	},
+
 	async rewrites() {
 		return [
 			{
@@ -8,8 +25,8 @@ const nextConfig = {
 			},
 			{
 				source: "/swagger/:path*",
-				destination: "http://localhost:5256/swagger/:path*"
-			}
+				destination: "http://localhost:5256/swagger/:path*",
+			},
 		];
 	},
 };
